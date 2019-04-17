@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var addr = flag.String("addr", ":8080", "http service address")
+var addr = flag.String("addr", ":8000", "http service address")
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL)
@@ -27,7 +27,7 @@ func main() {
 	go hub.run()
 	http.HandleFunc("/", serveHome)
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		serveWs(hub, w, r)
+		serveWs(w, r)
 	})
 	err := http.ListenAndServe(*addr, nil)
 	if err != nil {
